@@ -23,25 +23,32 @@ public class HighwaysAndHospitals {
         ArrayList<Integer> subtrees = new ArrayList<Integer>();
         Queue<Integer> toSearch = new LinkedList<Integer>();
         toSearch.add(1);
+        isVisited[1] = true;
 
-        int count = 0;
+        ArrayList<Integer> cur = new ArrayList<Integer>();
+        cur.add(1);
+
+        int count = 1;
 
         while (!toSearch.isEmpty()) {
             int curNode = toSearch.remove();
             isVisited[curNode] = true;
             for (int[] path : cities) {
-                if (!isVisited[path[1]] && path[0] == curNode) {
+                if (path[0] == curNode && !isVisited[path[1]]) {
                     toSearch.add(path[1]);
-                    count++;
+                    cur.add(path[1]);
+                    isVisited[path[1]] = true;
                 }
             }
 
             if (toSearch.isEmpty()) {
+                count = cur.size();
+                cur = new ArrayList<Integer>();
                 subtrees.add(count);
-                count = 0;
                 for (int[] path: cities) {
                     if (!isVisited[path[0]]) {
                         toSearch.add(path[0]);
+                        cur.add(path[0]);
                         break;
                     }
                 }

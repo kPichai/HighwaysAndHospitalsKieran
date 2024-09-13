@@ -18,10 +18,11 @@ public class HighwaysAndHospitals {
      * TODO: Complete this function, cost(), to return the minimum cost to provide
      *  hospital access for all citizens in Menlo County.
      */
-    public static Integer[] determineSubtrees(int n, int cities[][]) {
+    public static ArrayList<Integer> determineSubtrees(int n, int cities[][]) {
         boolean[] isVisited = new boolean[n+1];
         ArrayList<Integer> subtrees = new ArrayList<Integer>();
         Queue<Integer> toSearch = new LinkedList<Integer>();
+        toSearch.add(1);
 
         int count = 0;
 
@@ -47,7 +48,7 @@ public class HighwaysAndHospitals {
             }
         }
 
-        return toSearch.toArray(Integer[]::new);
+        return subtrees;
     }
 
     public static long cost(int n, int hospitalCost, int highwayCost, int cities[][]) {
@@ -55,13 +56,15 @@ public class HighwaysAndHospitals {
             return (long)n * hospitalCost;
         }
 
-        Integer[] subtrees = determineSubtrees(n, cities);
+        ArrayList<Integer> subtrees = determineSubtrees(n, cities);
+
+        System.out.println(subtrees);
 
         long highwayTotalCost = 0;
-        for (int numCities: subtrees) {
+        for (Integer numCities: subtrees) {
             highwayTotalCost += (long)highwayCost*(numCities - 1);
         }
 
-        return (long)hospitalCost*subtrees.length + highwayTotalCost;
+        return (long)hospitalCost*subtrees.size() + highwayTotalCost;
     }
 }

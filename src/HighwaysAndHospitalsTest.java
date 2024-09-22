@@ -76,7 +76,7 @@ public class HighwaysAndHospitalsTest {
                 long answerCost = Long.parseLong(answerReader.readLine());
                 loadTest(testReader);
                 assertEquals(answerCost, studentSolution.cost(n, hospitalCost, hightwayCost, cities),
-                        "Test " + testNumber + " failed: should return " + answerCost);
+                        "Test " + i + " failed: should return " + answerCost);
             }
         } catch (IOException e) {
             System.out.println("Error opening test file #" + testNumber);

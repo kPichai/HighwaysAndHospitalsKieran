@@ -10,7 +10,14 @@ public class HighwaysAndHospitals {
 
     public static int determineSubtrees(int n, int cities[][]) {
         int[] tree = new int[n + 1];
+        int[] subtreeSize = new int[n + 1];
+
+        for (int i = 0; i < n + 1; i++) {
+            subtreeSize[i] = 1;
+        }
+
         int numTrees = n;
+
         for (int[] path : cities) {
 
             int startingNode = path[1];
@@ -34,8 +41,16 @@ public class HighwaysAndHospitals {
             }
 
             if (startingNode != checkFor) {
+
                 numTrees--;
-                tree[checkFor] = startingNode;
+
+                if (subtreeSize[startingNode] <= subtreeSize[checkFor]) {
+                    tree[startingNode] = checkFor;
+                    subtreeSize[checkFor] += subtreeSize[startingNode];
+                } else {
+                    tree[checkFor] = startingNode;
+                    subtreeSize[startingNode] += subtreeSize[checkFor];
+                }
             }
         }
 
